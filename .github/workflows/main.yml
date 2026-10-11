@@ -58,20 +58,19 @@ build:
       # 8. Construir e publicar imagem Docker
       - name: Build e Push Docker
         uses: docker/build-push-action@v6
-with:
+        with:
           context: .
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/api-clientes:${{  
-                steps.version.outputs.VERSION }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/api-clientes:${{ steps.version.outputs.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/api-clientes:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       # 9. Exibir resultado
       - name: Finalizar publicacao
-          run: |
+        run: |
           echo "Publicacao concluida!"
           echo "Versao: ${{ steps.version.outputs.VERSION }}"
           echo "Imagem publicada no Docker Hub"
